@@ -1,13 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANEL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PANEL</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg1: #070a13;
+    --bg2: #02040a;
+    --glass: rgba(255,255,255,0.06);
+    --glass2: rgba(255,255,255,0.09);
+    --border: rgba(255,255,255,0.10);
+    --text: #e8eefc;
+    --muted: #9aa6c1;
+    --accent: #60a5fa;
+    --accent2: #a78bfa;
+    --good: #39d98a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    background: radial-gradient(circle at 20% 20%, #18213a, transparent 40%),
+                radial-gradient(circle at 80% 70%, #1b1030, transparent 35%),
+                linear-gradient(180deg, var(--bg1), var(--bg2));
+}
+
+/* floating glow blobs */
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    filter: blur(120px);
+    opacity: 0.35;
+    z-index: 0;
+}
+
+body::before {
+    background: #60a5fa;
+    top: -100px;
+    left: -100px;
+}
+
+body::after {
+    background: #a78bfa;
+    bottom: -120px;
+    right: -120px;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: 92%;
+    max-width: 560px;
+    animation: fadeUp 0.9s ease;
+}
+
+.card {
+    background: linear-gradient(180deg, var(--glass), rgba(255,255,255,0.03));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 26px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle shine line */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 180%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+}
+
+h1 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.2px;
+}
+
+.sub {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.status {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--good);
+    background: rgba(57,217,138,0.08);
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(57,217,138,0.25);
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--good);
+    box-shadow: 0 0 10px var(--good);
+}
+
+.links {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+a {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.25s ease;
+    overflow: hidden;
+}
+
+a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96,165,250,0.5);
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 10px 30px rgba(96,165,250,0.12);
+}
+
+a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(96,165,250,0.18), transparent);
+    transform: translateX(-120%);
+}
+
+a:hover::before {
+    transform: translateX(120%);
+    transition: 0.6s ease;
+}
+
+.tag {
+    font-size: 0.75rem;
+    color: var(--muted);
+    opacity: 0.8;
+}
+
+.footer {
+    margin-top: 18px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    opacity: 0.9;
+}
+
+/* animations */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>Uploaded and hosted by Winterfall - email for errors!</h1>
-    <a href="modern.htm">Modern Client</a>
-    <a href="shadow.htm">Shadow NET Client</a>
+
+<div class="container">
+    <div class="card">
+
+        <h1>Arcticsystem MC Launcher</h1>
+        <div class="sub">Hosted by Winterfallfurry • Web Client Hub</div>
+
+        <div class="status">
+            <span class="dot"></span>
+            Clients ONLINE
+        </div>
+
+        <div class="links">
+            <a href="modern/modern.htm">
+                Modern Client (1.12.2)
+                <span class="tag">stable</span>
+            </a>
+
+            <a href="shadow/index.html">
+                Shadow NET Client 4.2(1.8.8)
+                <span class="tag">beta</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            Winterfallfurry • Arcticsystem MC Launcher BETA • 2026 ©
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>
