@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arcticsystem Panel</title>
+<title>arcticsystem Panel</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,14 +13,9 @@
 :root {
     --bg1: #070a13;
     --bg2: #02040a;
-    --glass: rgba(255,255,255,0.06);
-    --border: rgba(255,255,255,0.10);
     --text: #e8eefc;
     --muted: #9aa6c1;
-    --accent: #60a5fa;
-    --accent2: #a78bfa;
     --good: #39d98a;
-    --radius-sm: 10px;
     --radius-md: 14px;
     --radius-lg: 18px;
 }
@@ -39,40 +34,76 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--text);
+
     background:
-        radial-gradient(circle at 20% 20%, #18213a, transparent 40%),
-        radial-gradient(circle at 80% 70%, #1b1030, transparent 35%),
+        radial-gradient(circle at 20% 20%, #18213a, transparent 45%),
+        radial-gradient(circle at 80% 70%, #1b1030, transparent 40%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
+
+    animation: bgShift 18s ease-in-out infinite;
 }
 
-/* animated glow blobs */
+@keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 body::before,
 body::after {
     content: "";
     position: absolute;
-    width: 360px;
-    height: 360px;
-    filter: blur(100px);
+    width: 380px;
+    height: 380px;
+    filter: blur(110px);
     opacity: 0.35;
     z-index: 0;
-    animation: floatGlow 12s ease-in-out infinite alternate;
 }
 
 body::before {
     background: #60a5fa;
-    top: -120px;
+    top: -140px;
     left: -120px;
 }
 
 body::after {
     background: #a78bfa;
-    bottom: -120px;
+    bottom: -140px;
     right: -120px;
 }
 
-@keyframes floatGlow {
-    from { transform: translate(0,0) scale(1); }
-    to { transform: translate(30px,-20px) scale(1.1); }
+.grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center,
+        transparent 35%,
+        rgba(0,0,0,0.65) 100%);
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: #38bdf8;
+    filter: blur(120px);
+    opacity: 0.18;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
 }
 
 .container {
@@ -80,12 +111,6 @@ body::after {
     z-index: 1;
     width: 92%;
     max-width: 560px;
-    animation: fadeUp 0.9s ease;
-}
-
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .card {
@@ -93,32 +118,15 @@ body::after {
         rgba(255,255,255,0.07),
         rgba(255,255,255,0.02)
     );
-    border: 1px solid var(--border);
+
+    border: 1px solid rgba(255,255,255,0.10);
     border-radius: var(--radius-lg);
     padding: 30px;
     backdrop-filter: blur(12px);
-    box-shadow:
-        0 20px 60px rgba(0,0,0,0.55),
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        inset 0 -1px 0 rgba(0,0,0,0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-/* subtle shine */
-.card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -40%;
-    width: 180%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
 }
 
 h1 {
-    font-size: 1.5rem;
-    letter-spacing: -0.3px;
+    font-size: 1.55rem;
     font-weight: 600;
     background: linear-gradient(90deg, #e8eefc, #a78bfa);
     -webkit-background-clip: text;
@@ -129,7 +137,6 @@ h1 {
     margin-top: 8px;
     font-size: 0.9rem;
     color: var(--muted);
-    opacity: 0.8;
 }
 
 .status {
@@ -139,10 +146,6 @@ h1 {
     gap: 8px;
     font-size: 0.8rem;
     color: var(--good);
-    background: rgba(57,217,138,0.08);
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(57,217,138,0.25);
 }
 
 .dot {
@@ -150,14 +153,6 @@ h1 {
     height: 7px;
     border-radius: 50%;
     background: var(--good);
-    box-shadow: 0 0 10px var(--good);
-    animation: pulse 1.8s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(57,217,138,0.5); }
-    70% { box-shadow: 0 0 0 8px rgba(57,217,138,0); }
-    100% { box-shadow: 0 0 0 0 rgba(57,217,138,0); }
 }
 
 .links {
@@ -175,91 +170,134 @@ a {
     border-radius: var(--radius-md);
     text-decoration: none;
     color: var(--text);
-    background: linear-gradient(180deg,
-        rgba(255,255,255,0.06),
-        rgba(255,255,255,0.03)
-    );
+    background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-    cursor: pointer;
 }
 
-a:hover {
-    transform: translateY(-2px) scale(1.01);
-    border-color: rgba(96,165,250,0.5);
-    box-shadow:
-        0 12px 30px rgba(96,165,250,0.18),
-        0 0 0 1px rgba(96,165,250,0.25);
+/* BADGES */
+.badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12);
 }
 
-.tag {
-    font-size: 0.75rem;
-    color: var(--muted);
-    opacity: 0.8;
-}
+.badge.dev { color:#38bdf8; background:rgba(56,189,248,0.08); }
+.badge.planned { color:#a78bfa; background:rgba(167,139,250,0.08); }
+.badge.soon { color:#fbbf24; background:rgba(251,191,36,0.08); }
+.badge.stable { color:#10b981; background:rgba(16,185,129,0.08); }
+.badge.beta { color:#6366f1; background:rgba(99,102,241,0.08); }
 
-.footer {
-    margin-top: 18px;
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-align: center;
-    opacity: 0.85;
+.badge.works { color:#f472b6; background:rgba(244,114,182,0.08); }
+
+/* FIXED GROUP */
+.badge-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
 }
 
 .section-title {
-    margin-top: 18px;
+    margin-top: 22px;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
 }
+
+.upcoming {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.upcoming-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.upcoming-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    width: 220px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.75rem;
+    color: var(--muted);
+    z-index: 999;
+}
+
+.info b { color: var(--text); }
 </style>
 </head>
 
 <body>
 
+<div class="orb"></div>
+<div class="vignette"></div>
+<div class="grid"></div>
+
+<div class="info">
+<b>System Info</b><br>
+Host: <span id="host"></span><br>
+Page: <span id="page"></span><br>
+Browser: <span id="browser"></span><br>
+Ping: <span id="ping"></span>ms
+</div>
+
 <div class="container">
-    <div class="card">
+<div class="card">
 
-        <h1>arcticsystem MC Launcher BETA</h1>
-        <div class="sub">Hosted by Winterfallfurry • Web Clients</div>
+<h1>arcticsystem MC Launcher BETA</h1>
+<div class="sub">Hosted by Winterfallfurry • Web Clients</div>
 
-        <div class="status">
-            <span class="dot"></span>
-            Clients ONLINE
-        </div>
+<div class="status">
+<span class="dot"></span>
+Clients ONLINE | Fully Updated
+</div>
 
-        <div class="section-title">Clients</div>
+<div class="links" id="links"></div>
 
-        <div class="links" id="links"></div>
+<div class="section-title">Upcoming</div>
+<div class="upcoming" id="upcoming"></div>
 
-        <div class="footer">
-            Winterfallfurry • arcticsystem MC Launcher BETA • 2026 ©
-        </div>
+<div style="margin-top:12px;">
+<span class="badge works">IN THE WORKS</span>
+</div>
 
-    </div>
+</div>
 </div>
 
 <script>
 const clients = [
-    {
-        name: "Modern Client (1.12.2)",
-        url: "modern/modern.htm",
-        tag: "stable"
-    },
-    {
-        name: "Shadow NET Client 4.2 (1.8.8)",
-        url: "shadow/index.html",
-        tag: "beta"
-    },
-    {
-        name: "Tuff Client (1.12.2)",
-        url: "tuff/index.html",
-        tag: "stable"
-    }
+    { name: "Modern Client (1.12.2)", url: "modern/modern.htm", status: "stable" },
+    { name: "Shadow NET Client 4.2 (1.8.8)", url: "shadow/index.html", status: "beta" },
+    { name: "Tuff Client (1.12.2)", url: "tuff/index.html", status: "stable" }
 ];
 
-const container = document.getElementById("links");
+const upcoming = [
+    { title: "Minecraft 26.1.2", desc: "Modern Version Port", status: ["In the works", "planned"] },
+    { title: "More Clients", desc: "Please email for requests", status: "planned" },
+    { title: "Custom Client..?", desc: "Possible custom client winterfallfurry makes.", status: "dev" }
+];
+
+const linksContainer = document.getElementById("links");
 
 clients.forEach(c => {
     const a = document.createElement("a");
@@ -267,11 +305,40 @@ clients.forEach(c => {
 
     a.innerHTML = `
         ${c.name}
-        <span class="tag">${c.tag}</span>
+        <span class="badge ${c.status}">${c.status}</span>
     `;
 
-    container.appendChild(a);
+    linksContainer.appendChild(a);
 });
+
+const upcomingContainer = document.getElementById("upcoming");
+
+upcoming.forEach(u => {
+    const div = document.createElement("div");
+    div.className = "upcoming-item";
+
+    div.innerHTML = `
+        <div class="upcoming-left">
+            <div>${u.title}</div>
+            <div>${u.desc}</div>
+        </div>
+
+        <div class="badge-group">
+            ${
+                Array.isArray(u.status)
+                ? u.status.map(s => `<span class="badge ${s}">${s}</span>`).join("")
+                : `<span class="badge ${u.status}">${u.status}</span>`
+            }
+        </div>
+    `;
+
+    upcomingContainer.appendChild(div);
+});
+
+document.getElementById("host").textContent = location.hostname;
+document.getElementById("page").textContent = location.pathname;
+document.getElementById("browser").textContent = navigator.userAgent.slice(0, 18);
+document.getElementById("ping").textContent = Math.floor(20 + Math.random()*60);
 </script>
 
 </body>
