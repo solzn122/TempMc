@@ -174,7 +174,6 @@ a {
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* BADGES */
 .badge {
     font-size: 0.7rem;
     padding: 4px 8px;
@@ -187,10 +186,8 @@ a {
 .badge.soon { color:#fbbf24; background:rgba(251,191,36,0.08); }
 .badge.stable { color:#10b981; background:rgba(16,185,129,0.08); }
 .badge.beta { color:#6366f1; background:rgba(99,102,241,0.08); }
-
 .badge.works { color:#f472b6; background:rgba(244,114,182,0.08); }
 
-/* FIXED GROUP */
 .badge-group {
     display: flex;
     gap: 6px;
@@ -233,7 +230,7 @@ a {
     position: fixed;
     top: 14px;
     right: 14px;
-    width: 220px;
+    width: 330px;
     padding: 12px;
     border-radius: 12px;
     background: rgba(255,255,255,0.05);
@@ -241,6 +238,7 @@ a {
     font-size: 0.75rem;
     color: var(--muted);
     z-index: 999;
+    word-break: break-word;
 }
 
 .info b { color: var(--text); }
@@ -258,7 +256,14 @@ a {
 Host: <span id="host"></span><br>
 Page: <span id="page"></span><br>
 Browser: <span id="browser"></span><br>
-Ping: <span id="ping"></span>ms
+OS: <span id="os"></span><br>
+Platform: <span id="platform"></span><br>
+Language: <span id="lang"></span><br>
+Screen: <span id="screen"></span><br>
+Timezone: <span id="tz"></span><br>
+Online: <span id="online"></span><br>
+Ping: <span id="ping"></span>ms<br>
+Time: <span id="time"></span>
 </div>
 
 <div class="container">
@@ -335,10 +340,39 @@ upcoming.forEach(u => {
     upcomingContainer.appendChild(div);
 });
 
+// System Info (expanded)
 document.getElementById("host").textContent = location.hostname;
 document.getElementById("page").textContent = location.pathname;
-document.getElementById("browser").textContent = navigator.userAgent.slice(0, 18);
-document.getElementById("ping").textContent = Math.floor(20 + Math.random()*60);
+document.getElementById("browser").textContent = navigator.userAgent;
+
+document.getElementById("os").textContent =
+    navigator.platform;
+
+document.getElementById("platform").textContent =
+    navigator.userAgentData?.platform || navigator.platform;
+
+document.getElementById("lang").textContent =
+    navigator.language;
+
+document.getElementById("screen").textContent =
+    `${screen.width}x${screen.height}`;
+
+document.getElementById("tz").textContent =
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+document.getElementById("online").textContent =
+    navigator.onLine ? "Yes" : "No";
+
+document.getElementById("ping").textContent =
+    Math.floor(20 + Math.random() * 60);
+
+document.getElementById("time").textContent =
+    new Date().toLocaleString();
+
+setInterval(() => {
+    document.getElementById("time").textContent =
+        new Date().toLocaleString();
+}, 1000);
 </script>
 
 </body>
